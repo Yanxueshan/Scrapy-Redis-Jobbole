@@ -8,6 +8,8 @@
 #     https://doc.scrapy.org/en/latest/topics/settings.html
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
+import os
+import sys
 
 BOT_NAME = 'Jobbole'
 
@@ -15,7 +17,7 @@ SPIDER_MODULES = ['Jobbole.spiders']
 NEWSPIDER_MODULE = 'Jobbole.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36"
+# USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -32,7 +34,7 @@ DOWNLOAD_DELAY = 0.5
 # CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
-# COOKIES_ENABLED = False
+COOKIES_ENABLED = False
 
 # Disable Telnet Console (enabled by default)
 # TELNETCONSOLE_ENABLED = False
@@ -54,8 +56,8 @@ DOWNLOAD_DELAY = 0.5
 DOWNLOADER_MIDDLEWARES = {
     'Jobbole.middlewares.JobboleDownloaderMiddleware': 543,
     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-    'Jobbole.middlewares.RandomUserAgnetDownloaderMiddleware': 1,
-    'Jobbole.middlewares.ProxyIPDownloaderMiddleware': 2,
+    'Jobbole.middlewares.RandomUserAgentDownloaderMiddleware': 1,
+    # 'Jobbole.middlewares.ProxyIPDownloaderMiddleware': 2,
 }
 
 # Enable or disable extensions
@@ -68,8 +70,9 @@ DOWNLOADER_MIDDLEWARES = {
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'Jobbole.items.JobboleArticleItem': 1,
-    'Jobbole.pipelines.JobbolePipeline': 300,
-    'Jobbole.pipelines.MySQLPipeline': 2,
+    # 'Jobbole.pipelines.JobbolePipeline': 300,
+    # 'Jobbole.pipelines.MySQLPipeline': 2,
+    'Jobbole.pipelines.MySQLTwistedPipeline': 2,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -97,3 +100,6 @@ MYSQL_HOST = 'localhost'
 MYSQL_DBNAME = 'jobbole'
 MYSQL_USER = 'root'
 MYSQL_PASSWORD = 'lingtian..1021'
+
+BASE_DIR = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
+sys.path.insert(0, os.path.join(BASE_DIR, 'Jobbole'))

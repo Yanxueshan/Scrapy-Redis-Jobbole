@@ -7,7 +7,7 @@
 
 from scrapy import signals
 from fake_useragent import UserAgent
-from Jobbole.libs.common import Fetch_Proxy
+from libs.crawl_ip_proxy import Fetch_Proxy
 
 
 class JobboleSpiderMiddleware(object):
@@ -105,7 +105,7 @@ class JobboleDownloaderMiddleware(object):
         spider.logger.info('Spider opened: %s' % spider.name)
 
 
-class RandomUserAgnetDownloaderMiddleware(object):
+class RandomUserAgentDownloaderMiddleware(object):
     '''
         为每次请求添加随机User-Agent
     '''
