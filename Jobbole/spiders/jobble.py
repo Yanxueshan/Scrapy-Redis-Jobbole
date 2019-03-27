@@ -5,7 +5,6 @@
 import re
 import datetime
 from urllib import parse
-import scrapy
 from scrapy.http import Request
 from Jobbole.items import JobboleArticleItem
 from Jobbole.libs.common import get_md5
@@ -13,12 +12,14 @@ from scrapy.xlib.pydispatch import dispatcher
 from scrapy import signals
 from settings import BASE_DIR
 import pickle
+from scrapy_redis.spiders import RedisSpider
 
 
-class JobbleSpider(scrapy.Spider):
+class JobbleSpider(RedisSpider):
     name = 'jobbole'
     allowed_domains = ['blog.jobbole.com']
-    start_urls = ['http://blog.jobbole.com/all-posts/']
+    redis_key = "jobbole:start_urls"
+    # start_urls = ['http://blog.jobbole.com/all-posts/']
 
     # scrapy默认处理 >=200 并且 <300的URL，其他的会过滤掉，handle_httpstatus_list表示对返回这些状态码的URL不过滤，自己处理
     handle_httpstatus_list = [302, 403, 404]

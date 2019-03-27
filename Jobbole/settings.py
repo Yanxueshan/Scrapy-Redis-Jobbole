@@ -39,6 +39,9 @@ COOKIES_ENABLED = False
 # Disable Telnet Console (enabled by default)
 # TELNETCONSOLE_ENABLED = False
 
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+
 # Override the default request headers:
 # DEFAULT_REQUEST_HEADERS = {
 #   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -68,10 +71,15 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
+# ITEM_PIPELINES = {
+#     'Jobbole.items.JobboleArticleItem': 1,
+#     # 'Jobbole.pipelines.JobbolePipeline': 300,
+#     # 'Jobbole.pipelines.MySQLPipeline': 2,
+#     'Jobbole.pipelines.MySQLTwistedPipeline': 2,
+# }
+
 ITEM_PIPELINES = {
-    'Jobbole.items.JobboleArticleItem': 1,
-    # 'Jobbole.pipelines.JobbolePipeline': 300,
-    # 'Jobbole.pipelines.MySQLPipeline': 2,
+    'scrapy_redis.pipelines.RedisPipeline': 300,
     'Jobbole.pipelines.MySQLTwistedPipeline': 2,
 }
 
